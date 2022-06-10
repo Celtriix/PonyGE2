@@ -1,6 +1,6 @@
 # Ensemble Creation with Grammatical Evolution Decision Trees
 
-This document goes over the most important changes that have been made to the distribution of the PonyGE2 library. The original distribution used in the scope of this thesis can be found under https://github.com/PonyGE/PonyGE2. The experiments in the thesis were conducted using version 0.2.0 which was the latest release at the time of writing.
+This document goes over the most important changes that have been made to the distribution of the PonyGE2 library. The original distribution used in the scope of this thesis can be found under https://github.com/PonyGE/PonyGE2. The experiments in the thesis were conducted using version 0.2.0 which was the latest release at the time of writing. [1]
 
 ## General changes
 The most important changes to the original implementation of Grammatical Evolution is the expansion to conduct multiple runs consecutively and the inclusion of the export of all individuals within a run. The original library has a feature in beta that aims to provide the execution of multiple runs of the evolutionary process. There were also changes made that allow for the usage of comparisons between individuals for the evaluation of the fitness of the individuals. This directory contains the needed files to replicate the experiments conducted in the scope of the thesis. Many files that were not needed were removed from the original distribution. The missing files can be included by downloading the original distribution and copying the contents of this repository to them. The changes to the PonyGE2 library were done as additions to it, without hindering the base utility.
@@ -53,11 +53,11 @@ The file "get_data.py" was adjusted to include the possibility to standardize th
 The data set directory for the original distribution of the PonyGE2 library comes with many available data sets. The Banknote data set has been adopted from the original distribution of the library. The other data sets included were removed to decrease the memory demand and facilitate easier sharing of the submission.
 
 
-For the Banknote [1] data set no changes were made to the training and test set. The test data contains 27.4% of observations, so this represents a slight deviation from the 70/30 split for the other data sets. The combination of the test and training set results in the same data found on the UCI data repository.
+For the Banknote [2] data set no changes were made to the training and test set. The test data contains 27.4% of observations, so this represents a slight deviation from the 70/30 split for the other data sets. The combination of the test and training set results in the same data found on the UCI data repository.
 
-The Iris [2] and Vehicle [3] data sets were taken form the UCI repository. For this data set the splits into training and test set were done by shuffling the original data and cutting it into the two parts. This step was not seeded, so a replication with only the base data set is not possible.
+The Iris [3] and Vehicle [4] data sets were taken form the UCI repository. For this data set the splits into training and test set were done by shuffling the original data and cutting it into the two parts. This step was not seeded, so a replication with only the base data set is not possible.
 
-The Cleveland [4] data set can be found in the KEEL repository, which itself links back to the bigger heart disease data set on the UCI repository. The splits into training and test set was done using a copy of the code used for the previous data sets and suffer from the same problem of not being seeded.
+The Cleveland [5] data set can be found in the KEEL repository, which itself links back to the bigger heart disease data set on the UCI repository. The splits into training and test set was done using a copy of the code used for the previous data sets and suffer from the same problem of not being seeded.
 
 ## Grammars
 The grammars used in the experiments have been saved into a separate folder with the name "GEDT_Experiments". The grammars only differ by the labels for the different classes. No other changes were made to this directory.
@@ -70,11 +70,12 @@ The flag for "DEBUG" has to be set to True. If the debug mode is turned off the 
 
 
 ## Sources
+[1] Fenton, M., McDermott, J., Fagan, D., Forstenlechner, S., Hemberg, E., and O'Neill, M. PonyGE2: Grammatical Evolution in Python. arXiv preprint, arXiv:1703.08535, 2017. https://github.com/PonyGE/PonyGE2
 
-[1] https://archive.ics.uci.edu/ml/datasets/banknote+authentication
+[2] https://archive.ics.uci.edu/ml/datasets/banknote+authentication
 
-[2] https://archive.ics.uci.edu/ml/datasets/iris
+[3] https://archive.ics.uci.edu/ml/datasets/iris
 
-[3] https://archive.ics.uci.edu/ml/datasets/Statlog+%28Vehicle+Silhouettes%29
+[4] https://archive.ics.uci.edu/ml/datasets/Statlog+%28Vehicle+Silhouettes%29
 
-[4] https://sci2s.ugr.es/keel/dataset.php?cod=57
+[5] https://sci2s.ugr.es/keel/dataset.php?cod=57
