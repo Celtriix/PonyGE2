@@ -1,0 +1,31 @@
+<expr> ::=  np.where(<cond>, <label>, <label>)                           |
+            np.where(<cond>, <label>, (<expr>))                          |
+            np.where(np.logical_and(<cond>, <cond>),<label>,(<expr>))    |
+            np.where(np.logical_or(<cond>,<cond>),<label>,(<expr>))      |
+            np.where(<cond>, <expr>, <expr>)                             |
+            <expr>                                                       |
+            <label>
+
+# number of classes for classification task 
+<label> ::= 0|1|2
+
+<cond> ::=  (x[:, <var_idx>] <= <const>)                |
+            (x[:, <var_idx>] <= x[:, <var_idx>])        |
+            (<subExpr> <= <const>)                      |
+            (<subExpr> <= <subExpr>)
+            
+            
+<subExpr> ::=   x[:, <var_idx>]<op><const>              |
+                x[:, <var_idx>]<op>x[:, <var_idx>]
+                
+
+<op> ::= + | - | * 
+
+
+<const> ::=  0.<digit> |
+            (-0.<digit>)
+
+<digit> ::= GE_RANGE:9
+
+# number of variables in the dataset
+<var_idx> ::= GE_RANGE:dataset_n_vars

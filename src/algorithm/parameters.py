@@ -27,12 +27,12 @@ params = {
     'FITNESS_FUNCTION': "supervised_learning.regression",
 
     # Select problem dataset
-    'DATASET_TRAIN': "Vladislavleva4/Train.txt",
+    'DATASET_TRAIN': "Banknote/Train.txt",
     'DATASET_TEST': None,
     'DATASET_DELIMITER': None,
 
     # Set grammar file
-    'GRAMMAR_FILE': "supervised_learning/Vladislavleva4.bnf",
+    'GRAMMAR_FILE': "supervised_learning/classification.bnf",
 
     # Set the number of depths permutations are calculated for
     # (starting from the minimum path of the grammar).
@@ -125,6 +125,10 @@ params = {
     # Save a plot of the evolution of the best fitness result for each
     # generation.
     'SAVE_PLOTS': True,
+    # Save the valid indiviuals for each generation of a run
+    'SAVE_POP': False,
+    # Choose the type of export
+    "USE_DIVERSITY" : False,
 
     # MULTIPROCESSING
     # Multi-core parallel processing of phenotype evaluations.
@@ -197,7 +201,6 @@ def load_params(file_name):
     :param file_name: The name/location of a parameters file.
     :return: Nothing.
     """
-
     try:
         open(file_name, "r")
     except FileNotFoundError:

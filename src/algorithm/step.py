@@ -4,7 +4,8 @@ from operators.mutation import mutation
 from operators.replacement import replacement, steady_state
 from operators.selection import selection
 from stats.stats import get_stats
-
+from algorithm.parameters import params
+import numpy as np
 
 def step(individuals):
     """
@@ -27,7 +28,17 @@ def step(individuals):
 
     # Mutate the new population.
     new_pop = mutation(cross_pop)
-
+    
+    if params["USE_DIVERSITY"]:
+        yhat = []
+        x = params["TRAIN_DATA_X"]
+        for i in range(len(individuals)):
+            yhat_ind = eval(individuals[i].phenotype)
+            if type(yhat_ind) == int:
+                yhat_ind = yhat_ind*np.ones(params["TRAIN_DATA_Y"].shape[0])
+            yhat.append(yhat_ind)
+        params["YHAT_CORRECT"] = (yhat == params["TRAIN_DATA_Y"])
+    
     # Evaluate the fitness of the new population.
     new_pop = evaluate_fitness(new_pop)
 

@@ -1,3 +1,5 @@
+import pandas as pd
+import numpy as np
 from multiprocessing import Pool
 
 from algorithm.parameters import params
@@ -25,6 +27,17 @@ def search_loop():
     # Initialise population
     individuals = initialisation(params['POPULATION_SIZE'])
 
+    if params["USE_DIVERSITY"]:
+        yhat = []
+        x = params["TRAIN_DATA_X"]
+        for i in range(len(individuals)):
+            yhat_ind = eval(individuals[i].phenotype)
+            if type(yhat_ind) == int:
+                yhat_ind = yhat_ind*np.ones(params["TRAIN_DATA_Y"].shape[0])
+            yhat.append(yhat_ind)
+        params["YHAT_CORRECT"] = (yhat == params["TRAIN_DATA_Y"])
+
+
     # Evaluate initial population
     individuals = evaluate_fitness(individuals)
 
@@ -32,15 +45,76 @@ def search_loop():
     get_stats(individuals)
 
     # Traditional GE
-    for generation in range(1, (params['GENERATIONS'] + 1)):
+    if params["SAVE_POP"] and params["USE_DIVERSITY"]:
+        phenotypes = [None]*((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+        phenotypes[0:params["POPULATION_SIZE"]] = [x.phenotype for x in individuals]
+        fitness_acc = np.zeros((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+        fitness_acc[0:params["POPULATION_SIZE"]] = [x.fitness[0] for x in individuals]
+        fitness_Q = np.zeros((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+        fitness_Q[0:params["POPULATION_SIZE"]] = [x.fitness[1] for x in individuals]
+        gen = np.zeros((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+    elif params["SAVE_POP"]:
+        phenotypes = [None]*((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+        phenotypes[0:params["POPULATION_SIZE"]] = [x.phenotype for x in individuals]
+        fitness = np.zeros((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+        fitness[0:params["POPULATION_SIZE"]] = [x.fitness for x in individuals]
+        gen = np.zeros((params["GENERATIONS"]+1)*params["POPULATION_SIZE"])
+    
+    for generation in range(1, (params['GENERATIONS']+1)):
         stats['gen'] = generation
 
         # New generation
         individuals = params['STEP'](individuals)
-
+        
+        if params["SAVE_POP"] and params["USE_DIVERSITY"]:
+            first_ind = (generation)*params["POPULATION_SIZE"]
+            last_ind = (generation+1)*params["POPULATION_SIZE"]
+            phenotypes[first_ind:last_ind] = [x.phenotype for x in individuals]
+            fitness_acc[first_ind:last_ind] = [x.fitness[0] for x in individuals]
+            fitness_Q[first_ind:last_ind] = [x.fitness[1] for x in individuals]
+            gen[first_ind:last_ind] = (generation)*np.ones(params["POPULATION_SIZE"])
+        elif params["SAVE_POP"]:
+            first_ind = (generation)*params["POPULATION_SIZE"]
+            last_ind = (generation+1)*params["POPULATION_SIZE"]
+            phenotypes[first_ind:last_ind] = [x.phenotype for x in individuals]
+            fitness[first_ind:last_ind] = [x.fitness for x in individuals]
+            gen[first_ind:last_ind] = (generation)*np.ones(params["POPULATION_SIZE"])            
+            
+    if params["USE_DIVERSITY"]:
+        yhat = []
+        x = params["TEST_DATA_X"]
+        for i in range(len(individuals)):
+            yhat_ind = eval(individuals[i].phenotype)
+            if type(yhat_ind) == int:
+                yhat_ind = yhat_ind*np.ones(params["TEST_DATA_Y"].shape[0])
+            yhat.append(yhat_ind)
+        params["YHAT_CORRECT"] = (yhat == params["TEST_DATA_Y"])
+    
     if params['MULTICORE']:
         # Close the workers pool (otherwise they'll live on forever).
         params['POOL'].close()
+    
+    if params["SAVE_POP"] and params["USE_DIVERSITY"]:
+        dir = params["SAVE_LOC"] + params["FILE_NAME"]
+        pd_pop = pd.DataFrame(list(zip(gen.astype(int), 
+                                       np.round(fitness_acc,3),
+                                       np.round(fitness_Q,3),
+                                       phenotypes)),
+                                  columns = ["Generation", "Fitness", "Q-Statistic", "Phenotype"])
+        # Remove Invalids
+        pd_pop = pd_pop.loc[(pd_pop["Fitness"] != np.nan)]
+        # Remove Duplicates
+        pd_pop = pd_pop.drop_duplicates("Phenotype")
+        pd_pop.to_csv(dir, sep = ";", index = False)
+    elif params["SAVE_POP"]:
+        dir = params["SAVE_LOC"] + params["FILE_NAME"]
+        pd_pop = pd.DataFrame(list(zip(gen.astype(int), np.round(fitness,3), phenotypes)),
+                                  columns = ["Generation", "Fitness", "Phenotype"])
+        # Remove Invalids
+        pd_pop = pd_pop.loc[(pd_pop["Fitness"] != np.nan)]
+        # Remove Duplicates
+        pd_pop = pd_pop.drop_duplicates("Phenotype")
+        pd_pop.to_csv(dir, sep = ";", index = False)
 
     return individuals
 

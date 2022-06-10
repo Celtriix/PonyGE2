@@ -1,8 +1,8 @@
 from os import path
 
 import numpy as np
+import sklearn as skl
 from algorithm.parameters import params
-
 
 def get_Xy_train_test_separate(train_filename, test_filename, skip_header=0):
     """
@@ -78,6 +78,12 @@ def get_Xy_train_test_separate(train_filename, test_filename, skip_header=0):
 
     else:
         test_X, test_y = None, None
+        
+    if params["STANDARDIZE"]:
+        scaler_train = skl.preprocessing.StandardScaler().fit(train_X)
+        train_X = scaler_train.transform(train_X)
+        scaler_test = skl.preprocessing.StandardScaler().fit(test_X)
+        test_X = scaler_test.transform(test_X)
 
     return train_X, train_y, test_X, test_y
 

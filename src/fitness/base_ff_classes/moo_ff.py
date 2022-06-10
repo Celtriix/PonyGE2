@@ -1,6 +1,9 @@
 from math import isnan
 
 import numpy as np
+from algorithm.parameters import params
+from utilities.fitness.get_data import get_data
+
 
 np.seterr(all="raise")
 
@@ -30,13 +33,27 @@ class moo_ff:
         for i, ff in enumerate(self.fitness_functions):
             self.fitness_functions[i] = ff()
 
+        # Get training and test data
+        self.training_in, self.training_exp, self.test_in, self.test_exp = \
+            get_data(params['DATASET_TRAIN'], params['DATASET_TEST'])
+        params["TRAIN_DATA_X"] = self.training_in
+        params["TRAIN_DATA_Y"] = self.training_exp
+        params["TEST_DATA_X"] = self.test_in
+        params["TEST_DATA_Y"] = self.test_exp
+            
+        # Find number of variables.
+        self.n_vars = np.shape(self.training_in)[1] # sklearn convention
+
+        # Regression/classification-style problems use training and test data.
+        if params['DATASET_TEST']:
+            self.training_test = True
         # Set up list of default fitness values (as per individual fitness
         # functions).
         self.default_fitness = []
         for f in fitness_functions:
             self.default_fitness.append(f.default_fitness)
 
-    def __call__(self, ind):
+    def __call__(self, ind, **kwargs):
         """
         Note that math functions used in the solutions are imported from either
         utilities.fitness.math_functions or called from numpy.
@@ -49,7 +66,8 @@ class moo_ff:
         # representing the output of one objective function. The computation is
         # made by the function multi_objc_eval, implemented by a subclass,
         # according to the problem.
-        fitness = [ff(ind) for ff in self.fitness_functions]
+        dist = kwargs.get('dist', 'training')
+        fitness = [ff(ind, dist = dist) for ff in self.fitness_functions]
 
         if any([isnan(i) for i in fitness]):
             # Check if any objective fitness value is NaN, if so set default

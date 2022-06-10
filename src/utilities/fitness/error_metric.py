@@ -137,3 +137,30 @@ def Hamming_error(y, yhat):
 
 
 Hamming_error.maximise = False
+
+def Miss_rate(y, yhat):
+    """
+    :param y: The expected input (i.e. from dataset).
+    :param yhat: The given input (i.e. from phenotype).
+    :return: The miss-ratey.
+
+    """
+    return np.sum(y != yhat)/len(y)
+
+# Set maximise attribute for accuracy error metric.
+Miss_rate.maximise = False
+
+
+def Accuracy(y, yhat):
+    """
+    Classical impelemntation of the accuracy metric
+
+    :param y: The expected input (i.e. from dataset).
+    :param yhat: The given input (i.e. from phenotype).
+    :return: The accuracy.
+
+    """
+    return np.sum(y == yhat)/len(y)
+
+# Set maximise attribute for accuracy error metric.
+Accuracy.maximise = True

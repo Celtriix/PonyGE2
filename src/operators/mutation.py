@@ -229,9 +229,39 @@ def LTGE_mutation(ind):
 
     return ind
 
+def prob_flip_per_ind(ind):
+    """
+    Implementation of traditional mutation operator.
+    With the given mutation probability a random index of the codon is mutated
+    in the sense of replacing it with another integer in range.
+    
+    :param ind: An individual.
+    :return: The effective length of the genome.
+    """
+    
+    if params['MUTATION_PROBABILITY'] is not None:
+        p_mut = params['MUTATION_PROBABILITY']
+
+    if random() <= p_mut:
+        # Set effective genome length over which mutation will be performed.
+        eff_length = get_effective_length(ind)
+
+        if not eff_length:
+            # Linear mutation cannot be performed on this individual.
+            return ind
+        idx = randint(0, eff_length - 1)
+        ind.genome[idx] = randint(0, params['CODON_SIZE'])
+
+        # Re-build a new individual with the newly mutated genetic information.
+        new_ind = individual.Individual(ind.genome, None)
+    
+        return new_ind
+    else: 
+        return ind
 
 # Set attributes for all operators to define linear or subtree representations.
 int_flip_per_codon.representation = "linear"
 int_flip_per_ind.representation = "linear"
 subtree.representation = "subtree"
 LTGE_mutation.representation = "latent tree"
+prob_flip_per_ind.representation = "linear"
