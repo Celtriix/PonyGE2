@@ -6,26 +6,30 @@ DATASET_TRAIN:          Vehicle/Train.csv
 DATASET_TEST:           Vehicle/Test.csv
 DEBUG:                  True
 ERROR_METRIC:           Miss_rate
+EXPERIMENT_NAME:        Vehicle_500Gen_Moo
+FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy, Q_statistic
 GENERATIONS:            500
-MAX_GENOME_LENGTH:      500
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Vehicle.pybnf
 INITIALISATION:         PI_grow
 INVALID_SELECTION:      False
 MAX_INIT_TREE_DEPTH:    10
+MAX_GENOME_LENGTH:      500
 MAX_TREE_DEPTH:         15
+MIN_INIT_TREE_DEPTH:    3
 MUTATION:               prob_flip_per_ind
 MUTATION_PROBABILITY:   0.05
 POPULATION_SIZE:        100
-FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy, Q_statistic
 RANDOM_SEED:            81197
-SAVE_POP:               True
 REPLACEMENT:            nsga2_replacement
-SELECTION:              nsga2_selection
-TOURNAMENT_SIZE:        2
-VERBOSE: 				False
 RUNS:                   50
-EXPERIMENT_NAME:        Vehicle_500Gen_Moo
-MIN_INIT_TREE_DEPTH:    3
-STANDARDIZE:            True
-USE_DIVERSITY:          True
+SAVE_POP:               True
+SELECTION:              nsga2_selection
 SILENT:                 True
+STANDARDIZE:            True
+TOURNAMENT_SIZE:        2
+USE_DIVERSITY:          True
+VERBOSE: 		False
+
+
+
+
