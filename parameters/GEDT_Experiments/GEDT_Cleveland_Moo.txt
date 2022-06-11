@@ -8,7 +8,7 @@ DEBUG:                  True
 ERROR_METRIC:           Miss_rate
 EXPERIMENT_NAME:        Cleveland_500Gen_Moo
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy, Q_statistic
-GENERATIONS:            500
+GENERATIONS:            499
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Cleveland.pybnf
 INITIALISATION:         PI_grow
 INVALID_SELECTION:      False

@@ -13,11 +13,11 @@ import os
 import itertools
 
 # Data source
-data_name = "Vehicle"
+data_name = "Iris"
 
 # Input information
-nGen = 500
-suffix = "Final" # "Moo_newQ"
+nGen = 250
+suffix = "Submission" # "Moo"
 file_name = "Ensemble_out_Q_combined.csv"
 
 # Create the name of the input/output folder

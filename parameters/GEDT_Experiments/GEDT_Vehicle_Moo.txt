@@ -8,7 +8,7 @@ DEBUG:                  True
 ERROR_METRIC:           Miss_rate
 EXPERIMENT_NAME:        Vehicle_500Gen_Moo
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy, Q_statistic
-GENERATIONS:            500
+GENERATIONS:            499
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Vehicle.pybnf
 INITIALISATION:         PI_grow
 INVALID_SELECTION:      False
@@ -28,7 +28,7 @@ SILENT:                 True
 STANDARDIZE:            True
 TOURNAMENT_SIZE:        2
 USE_DIVERSITY:          True
-VERBOSE: 		False
+VERBOSE: 		        False
 
 
 

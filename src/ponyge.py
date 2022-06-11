@@ -19,7 +19,7 @@ import datetime
 
 
 # Directory of the parameter file that is to be used
-param_file = "GEDT_Experiments/GEDT_Vehicle_500Gen.txt"
+param_file = "GEDT_Experiments/GEDT_Iris_250Gen.txt"
 
 def mane():
     """ Run program """
@@ -27,6 +27,9 @@ def mane():
     # Load from parameter file
     dir = os.path.dirname(__file__)[:-3] + "parameters/"
     load_params(dir+param_file)
+    
+    # Load from command-line
+    set_params(sys.argv[1:])  # exclude the ponyge.py arg itself
     
     # Set up directories for the output of the runs
     if params["SAVE_POP"]:
