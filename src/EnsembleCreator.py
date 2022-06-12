@@ -13,7 +13,7 @@ import os
 import itertools
 
 # Directory of the experiment
-experiment_name = "Iris_250Gen_Submission"
+experiment_name = "Iris_250Gen"
 file_name = "Ensemble_out.csv"
 
 # Parameters
@@ -23,21 +23,21 @@ use_weights = True
 both_weights = True
 riffle = True
 
-# Threshold of one tree to be too correlated with another
+# Threshold of one tree to be similar to another
 max_corr = [-0.25, 0.0, 0.25, 0.5, 0.75]
-# Percentage of correlated trees to keep
+# Percentage of too similar trees to keep
 flip_pct = np.array([0.0])
 # Number of initial candidates in an ensemble
 thresholds_abs = np.array([50, 100, 200, 250, 500])
 
 
 # Data input
+test_file_name = "Test.csv"
+train_file_name = "Train.csv"
 data_name = experiment_name.split("_")[0]
 standardize = True
 out_path = os.path.dirname(__file__)[:-3] + "results/" + experiment_name
 data_path = os.path.dirname(__file__)[:-3] + "datasets/" +  data_name
-test_file_name = "Test.csv"
-train_file_name = "Train.csv"
 test_file= data_path + "/" + test_file_name
 train_file = data_path + "/" + train_file_name
 # Set separator
