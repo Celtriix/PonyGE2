@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 
 # Directory of the experiment
-experiment_name = "Iris_250Gen_Submission"
+experiment_name = "Iris_250Gen"
 # File containing the ensemble output
 file_name = "Ensemble_out.csv"
 # Whether to use weights or not
