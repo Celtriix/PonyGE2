@@ -12,16 +12,9 @@ from sklearn import tree
 import os
 import itertools
 
-# Data source
-data_name = "Iris"
-
-# Input information
-nGen = 250
-suffix = "Submission" # "Moo"
-file_name = "Ensemble_out_Q_combined.csv"
-
-# Create the name of the input/output folder
-experiment_name = f"{data_name}_{nGen}Gen_{suffix}"
+# Directory of the experiment
+experiment_name = "Iris_250Gen_Submission"
+file_name = "Ensemble_out.csv"
 
 # Parameters
 np.random.seed(81197)
@@ -39,6 +32,7 @@ thresholds_abs = np.array([50, 100, 200, 250, 500])
 
 
 # Data input
+data_name = experiment_name.split("_")[0]
 standardize = True
 out_path = os.path.dirname(__file__)[:-3] + "results/" + experiment_name
 data_path = os.path.dirname(__file__)[:-3] + "datasets/" +  data_name
@@ -52,7 +46,7 @@ if data_name == "Banknote":
     whitespace = True
 
 # Infer the number of runs to be mixed
-n_mix = 1 if nGen == 500 else 2
+n_mix = 2 if experiment_name.find("250") else 1
 
 #%%
 def main():

@@ -19,7 +19,23 @@ import datetime
 
 
 # Directory of the parameter file that is to be used
-param_file = "GEDT_Experiments/GEDT_Iris_250Gen.txt"
+
+# Banknote data set
+# param_file = "GEDT_Experiments/GEDT_Banknote_500Gen.txt"
+# param_file = "GEDT_Experiments/GEDT_Banknote_250Gen.txt"
+# Iris data set
+# param_file = "GEDT_Experiments/GEDT_Iris_500Gen.txt"
+# param_file = "GEDT_Experiments/GEDT_Iris_250Gen.txt"
+#Vehicle data set
+# param_file = "GEDT_Experiments/GEDT_Vehicle_500Gen.txt"
+# param_file = "GEDT_Experiments/GEDT_Vehicle_250Gen.txt"
+# param_file = "GEDT_Experiments/GEDT_Vehicle_Moo.txt"
+#Cleveland data set
+# param_file = "GEDT_Experiments/GEDT_Cleveland_500Gen.txt"
+# param_file = "GEDT_Experiments/GEDT_Cleveland_250Gen.txt"
+param_file = "GEDT_Experiments/GEDT_Cleveland_Moo.txt"
+
+
 
 def mane():
     """ Run program """

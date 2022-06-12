@@ -6,7 +6,7 @@ DATASET_TRAIN:          Iris/Train.csv
 DATASET_TEST:           Iris/Test.csv
 DEBUG:                  True
 ERROR_METRIC:           Miss_rate
-EXPERIMENT_NAME:        Iris_500Gen_Submission
+EXPERIMENT_NAME:        Iris_500Gen
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy
 GENERATIONS:            500
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Iris.pybnf

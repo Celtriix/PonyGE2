@@ -10,28 +10,29 @@ import os
 import pandas as pd
 import numpy as np
 
-data_set_name = "Cleveland"
-nGen = 250
-suffix = "Final"
-# suffix = "Moo_newQ"
-experiment_name = f"{data_set_name}_{nGen}Gen_{suffix}"
-file_name = "Ensemble_out_Q_combined.csv"
-results_path = os.path.dirname(__file__)[:-3] + "results/" + experiment_name
-
-# weighted = False
+# Directory of the experiment
+experiment_name = "Iris_250Gen_Submission"
+# File containing the ensemble output
+file_name = "Ensemble_out.csv"
+# Whether to use weights or not
 weighted = True
+
+# %%
+results_path = os.path.dirname(__file__)[:-3] + "results/" + experiment_name
 figure_path = results_path + "/Figures"
 tables_path = results_path + "/Tables"
 data_path = results_path + "/" + file_name
 whitespace = False
 np.random.seed(81197)
 
-if nGen == 500 and suffix == "Final":
+if experiment_name.find("500"):
     calib = 1
-elif nGen == 250:
+elif experiment_name.find("250"):
     calib = 2
 else:
     calib = 3
+    
+data_set_name = experiment_name.split("_")[0]
 
 try:
     os.mkdir(results_path + "/Figures")
@@ -163,8 +164,6 @@ plt.subplots_adjust(top=0.91, bottom=0.1, left=0.1, right=0.9, hspace=0.1, wspac
 row_headers = ["Maximum average\n Q-statistic : -0.25", "Maximum average\n Q-statistic : 0.0", "Maximum average\n Q-statistic : 0.25","Maximum average\n Q-statistic : 0.5", "Maximum average\n Q-statistic : 0.75"]
 column_headers = ["50 Individuals", "100 Individuals", "200 Individuals", "250 Individuals", "500 Individuals"]
 add_headers(fig, row_headers = row_headers, col_headers = column_headers, bottom_header = "Accuracy in %")
-p_values_train = np.ones((len(sims), len(thresholds))) * 2
-p_values_test = np.ones((len(sims), len(thresholds))) * 2
 for i in range(len(sims)):
     for j in range(len(thresholds)):
         sub_df = df[(df["Similarity_Threshold"] == sims[i]) & (df["Threshold"] == thresholds[j])&(df["Weighted"] == weighted)][["Training_Fitness", "Test_Fitness"]]
@@ -196,8 +195,6 @@ plt.savefig(figure_path+f'/{experiment_name}_Histograms_{weighted}_median.png', 
 df = pd.read_csv(data_path)
 best_individuals = pd.read_csv(results_path+"/Best_Individuals.csv")
 best_individuals = best_individuals.drop(columns = ["Phenotype"])
-best_individuals["Training_Fitness"] = best_individuals["Training_Fitness"]
-best_individuals["Test_Fitness"] = best_individuals["Test_Fitness"]
 df = pd.concat([df, best_individuals])
 df["Threshold"][~df["Threshold"].isin(["RF", "Best_Ensemble", "DT", "Single_Individual"])] = "Population_Ensemble"
 df = df[df["Threshold"].isin(["RF", "Best_Ensemble", "DT", "Single_Individual", "Population_Ensemble"])]
@@ -262,4 +259,6 @@ df_pivot_merge.to_latex(tables_path + "/Fitness_popEnsemble_median.tex", float_f
 
 
 plt.close("all")
+
+
 # End of File

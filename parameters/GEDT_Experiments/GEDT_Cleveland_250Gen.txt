@@ -6,7 +6,7 @@ DATASET_TRAIN:          Cleveland/Train.csv
 DATASET_TEST:           Cleveland/Test.csv
 DEBUG:                  True
 ERROR_METRIC:           Miss_rate
-EXPERIMENT_NAME:        Cleveland_250Gen_Submission
+EXPERIMENT_NAME:        Cleveland_250Gen
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy
 GENERATIONS:            249
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Cleveland.pybnf

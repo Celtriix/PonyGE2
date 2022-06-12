@@ -6,7 +6,7 @@ DATASET_TRAIN:          Vehicle/Train.csv
 DATASET_TEST:           Vehicle/Test.csv
 DEBUG:                  True
 ERROR_METRIC:           Miss_rate
-EXPERIMENT_NAME:        Vehicle_500Gen_Moo
+EXPERIMENT_NAME:        Vehicle_Moo
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy, Q_statistic
 GENERATIONS:            499
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Vehicle.pybnf
@@ -28,7 +28,7 @@ SILENT:                 True
 STANDARDIZE:            True
 TOURNAMENT_SIZE:        2
 USE_DIVERSITY:          True
-VERBOSE: 		        False
+VERBOSE: 		False
 
 
 

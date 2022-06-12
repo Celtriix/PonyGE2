@@ -6,7 +6,7 @@ DATASET_TRAIN:          Banknote/Train.csv
 DATASET_TEST:           Banknote/Test.csv
 DEBUG:                  True
 ERROR_METRIC:           Miss_rate
-EXPERIMENT_NAME:        Banknote_250Gen_Submission
+EXPERIMENT_NAME:        Banknote_250Gen
 FITNESS_FUNCTION:       supervised_learning.supervised_learning_numpy
 GENERATIONS:            249
 GRAMMAR_FILE:           GEDT_Experiments/GEDT_Banknote.pybnf
