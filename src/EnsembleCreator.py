@@ -13,7 +13,7 @@ import os
 import itertools
 
 # Directory of the experiment
-experiment_name = "Iris_250Gen"
+experiment_name = "Banknote_500Gen"
 file_name = "Ensemble_out.csv"
 
 # Parameters
@@ -283,15 +283,6 @@ def evaluate_DT(n_Runs):
     print("Done with Decision Trees")
     return df_out
 
-df_DT = evaluate_DT(50)
-print(df_DT[["Training_Fitness", "Test_Fitness"]].mean())
-print(df_DT[["Training_Fitness", "Test_Fitness"]].std())
-
-df_RF = evaluate_RF(50)
-print(df_RF[["Training_Fitness", "Test_Fitness"]].mean())
-print(df_RF[["Training_Fitness", "Test_Fitness"]].std())
-
-
 
 # %% Helper functions
 def treat_similarity_Q(yhat_train, flip_pct, max_corr, y):
@@ -303,7 +294,10 @@ def treat_similarity_Q(yhat_train, flip_pct, max_corr, y):
         N11 = np.sum(np.logical_and(yhat_correct == False, yhat_ind == False), axis = 1)
         N10 = np.sum(np.logical_and(yhat_correct == True, yhat_ind == False), axis = 1)
         N01 = np.sum(np.logical_and(yhat_correct == False, yhat_ind == True), axis = 1)
-        Q_out[i] = (np.mean((N00*N11 - N01*N10) /(N00*N11 + N01*N10)) - 1/yhat_correct.shape[0])
+        try:
+            Q_out[i] = (np.mean((N00*N11 - N01*N10) /(N00*N11 + N01*N10)) - 1/yhat_correct.shape[0])
+        except(FloatingPointError):
+            Q_out[i] = np.nan
     too_similar = Q_out > max_corr
     if flip_pct == 0:
         return too_similar

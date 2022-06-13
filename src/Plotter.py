@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 
 # Directory of the experiment
-experiment_name = "Iris_250Gen"
+experiment_name = "Banknote_500Gen"
 # File containing the ensemble output
 file_name = "Ensemble_out.csv"
 # Whether to use weights or not
@@ -22,7 +22,6 @@ results_path = os.path.dirname(__file__)[:-3] + "results/" + experiment_name
 figure_path = results_path + "/Figures"
 tables_path = results_path + "/Tables"
 data_path = results_path + "/" + file_name
-whitespace = False
 np.random.seed(81197)
 
 # Infer the calibration
