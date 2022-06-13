@@ -46,7 +46,10 @@ if data_name == "Banknote":
     whitespace = True
 
 # Infer the number of runs to be mixed
-n_mix = 2 if experiment_name.find("250") else 1
+if experiment_name.find("250") >= 0:
+    n_mix = 2
+else:
+    n_mix = 1
 
 #%%
 def main():
