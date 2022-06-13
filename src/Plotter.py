@@ -25,15 +25,17 @@ data_path = results_path + "/" + file_name
 whitespace = False
 np.random.seed(81197)
 
-if experiment_name.find("500"):
+# Infer the calibration
+if experiment_name.find("500") >= 0:
     calib = 1
-elif experiment_name.find("250"):
+elif experiment_name.find("250") >= 0:
     calib = 2
 else:
     calib = 3
     
 data_set_name = experiment_name.split("_")[0]
 
+# Create the sub-folders in the results directory
 try:
     os.mkdir(results_path + "/Figures")
 except(FileExistsError):
@@ -52,7 +54,7 @@ df["Size_Multiplier"] = df["Ensemble_Size_post"]/df["Ensemble_Size_pre"]
 df["Training_Fitness"] = df["Training_Fitness"]*100
 df["Test_Fitness"] = df["Test_Fitness"]*100
 
-# Create the plot for each percentage of kept correlated trees in the ensemble
+# Create the plot for each percentage of too similar trees kept in the ensemble
 for i in df["Similarity_Threshold"].unique()[:-1]:
     fig, axs = plt.subplots(1,2, figsize = (8,6), sharey = True)
     ens = df.loc[~df["Threshold"].isin(["RF", "Best_Ensemble", "Best_All", "DT"])]
@@ -190,7 +192,7 @@ else:
 fig.legend(labels = ["Median Training Fitness", "Median Test Fitness"], loc = (0.7,0.9375))
 plt.savefig(figure_path+f'/{experiment_name}_Histograms_{weighted}_median.png', bbox_inches='tight')
 
-#%% Compare the best ensembles to RF
+#%% Compare the ensembles to RF and DT
 
 df = pd.read_csv(data_path)
 best_individuals = pd.read_csv(results_path+"/Best_Individuals.csv")
@@ -229,7 +231,7 @@ plt.suptitle(f"Accuracy comparison for the {data_set_name} data set using calibr
 plt.savefig(figure_path+f'/{experiment_name}_Individual_Comparison.png')
 
 
-# Create the comparison of methods for export
+# Create the comparison of methods table for export
 cols = [["Best_Ensemble", False], ["Best_Ensemble", True], ["Population_Ensemble", False], ["Population_Ensemble", True], ["Single_Individual", False], ["RF", False], ["DT", False]]
 df_pivot_train = df.pivot_table(columns = ["Threshold", "Weighted"], values = "Training_Fitness", aggfunc = np.median)
 df_pivot_train = df_pivot_train[cols]
@@ -242,7 +244,7 @@ df_pivot_test_STD = df_pivot_test_STD[cols]
 df_pivot_merge = pd.concat([df_pivot_train, df_pivot_train_STD, df_pivot_test, df_pivot_test_STD])
 df_pivot_merge.to_latex(tables_path + "/Fitness_Comparison_median.tex", float_format="{:0.1f}".format)
 
-#%% Create the cross tables for export
+#%% Create the population ensembles tables for export
 df = pd.read_csv(data_path)
 df = df[~df["Threshold"].isin(["RF", "Best_Ensemble", "DT"])]
 df["Threshold"] = df["Threshold"].astype(int)
